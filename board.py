@@ -98,21 +98,8 @@ class Board:
 
 
 
-
-    def copy_board(self):
-        new_board = []
-        for row in self.board:
-            new_row = []
-            for piece in row:
-                if piece == 0:
-                    new_row.append(0)
-                else:
-                    new_piece = deepcopy(piece)
-                    new_row.append(new_piece)
-            new_board.append(new_row)
-        return new_board
-
     def highlight_square(self, piece, win):
+        '''when piece selected on board - square of piece higligheted in green'''
         win.blit(G_BOX, piece.get_coordinate())
 
     def print_row(self, lst):
@@ -185,6 +172,7 @@ class Board:
             self.board[7][col] = w_b
 
     def draw_check(self, colour, win):
+        '''draw red circle behind king when in check'''
         king = self.get_king(colour)
         king.draw_check(win)
 
@@ -209,7 +197,7 @@ class Board:
     def draw_file(self, win):
         '''draw file/col number at bottom of board'''
         file = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
-        x, y = SQUARE_SIZE - FONT_SIZE + 3, HEIGHT - FONT_SIZE - 3
+        x, y = SQUARE_SIZE - FONT_SIZE + 8 , HEIGHT - FONT_SIZE + 5
         for i, ele in enumerate(file):
             colour = LIGHT_BROWN if i % 2 == 0 else DARK_BROWN
             text = FONT.render(ele, True, colour)
@@ -225,6 +213,7 @@ class Board:
         self.draw_file(win)
 
     def draw_pieces(self, win):
+        '''draw pieces on board'''
         for row in self.board:
             for piece in row:
                 if piece == 0:

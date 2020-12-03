@@ -4,7 +4,7 @@ from board import Board
 from constant import *
 from piece import *
 from copy import deepcopy
-
+import time
 
 class Game:
     def __init__(self, win):
@@ -46,22 +46,10 @@ class Game:
         pygame.display.update()
 
         if self.checkmate:
-            print('CHECKMATE')
-            print(f'{get_opposite_colour(self.turn)} WON')
-            choice = input('Play again (Y/N) ? ').upper()
-            if choice == 'Y':
-                self._init()
-            else:
-                sys.exit(0)
+            self.draw_game_end('checkmate')
 
         if self.stalemate:
-            print('STALEMATE')
-            choice = input('Play again (Y/N) ? ').upper()
-            if choice == 'Y':
-                self._init()
-            else:
-                sys.exit(0)
-
+            self.draw_game_end('stalemate')
 
 
     def select(self, pos):
@@ -299,3 +287,61 @@ class Game:
                     if piece.get_colour() == colour:
                         all_legal_moves.extend(self.get_legal_moves(piece))
         return all_legal_moves
+
+
+
+
+
+
+
+
+
+
+    def draw_game_end(self, condition):
+        # background
+        x, y = 0, 2 * SQUARE_SIZE
+        bg_rect = pygame.Rect(x, y, COLS * SQUARE_SIZE, 4 * SQUARE_SIZE)
+
+        if condition == 'checkmate':
+            colour = get_opposite_colour(self.turn)
+            colour = 'BLACK' if colour == 'B' else 'WHITE'
+            message = f'CHECKMATE, {colour} WON'
+        else: 
+            message = 'STALEMATE'
+        
+        font = pygame.font.SysFont(None, 50)
+        text = font.render(message, True, RED)
+        text_rect = text.get_rect(center=(WIDTH // 2, y + 50))
+
+        text_play_again = font.render('PLAY AGAIN', True, RED)
+        text_play_again_rect = text_play_again.get_rect(center=(WIDTH // 4, y + 150))
+
+        text_quit = font.render('QUIT', True, RED)
+        text_quit_rect = text_quit.get_rect(center=(int(WIDTH * (3/4)), y + 150))
+
+        
+        
+
+        while True:
+            pygame.draw.rect(self.win, WHITE, bg_rect)
+            self.win.blit(text, text_rect)
+            self.win.blit(text_play_again, text_play_again_rect)
+            self.win.blit(text_quit, text_quit_rect)
+
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    sys.exit(0)
+                if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                    pos = pygame.mouse.get_pos()
+
+                    if text_play_again_rect.collidepoint(pos):
+                        print('PLAY AGAIN')
+                        self._init()
+                        return
+
+                    if text_quit_rect.collidepoint(pos):
+                        sys.exit(0)
+
+            pygame.display.update()
+
+        

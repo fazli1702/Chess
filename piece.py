@@ -297,6 +297,7 @@ class King(Piece):
         win.blit(img, self.get_coordinate())
 
     def draw_check(self, win):
+        '''draw red circle behind king when in check'''
         win.blit(R_CIRCLE, self.get_coordinate())
 
     def get_moves(self, board):

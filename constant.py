@@ -6,8 +6,9 @@ ROWS, COLS = 8, 8
 SQUARE_SIZE = WIDTH // COLS or HEIGHT // ROWS # both are equal
 
 pygame.font.init()
-FONT_SIZE = 11
-FONT = pygame.font.SysFont('hackregularnerdfontcomplete', FONT_SIZE)
+FONT_SIZE = 15
+# FONT = pygame.font.SysFont('hackregularnerdfontcomplete', FONT_SIZE)
+FONT = pygame.font.SysFont(None, FONT_SIZE)
 
 # RGB colours
 WHITE = (232, 235, 239)
