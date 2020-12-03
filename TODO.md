@@ -54,5 +54,5 @@
     - Draw
 
 
-* [ ] GUI (display message on screen)
+* [x] GUI (display message on screen)
     - checkmate / stalemate
