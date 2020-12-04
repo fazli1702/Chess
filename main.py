@@ -22,9 +22,9 @@ def main():
                 game.select(mouse_pos)
 
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_LEFT:
+                if event.key == pygame.K_LEFT: # left arrow key pressed
                     game.undo()
-                if event.key == pygame.K_RIGHT:
+                if event.key == pygame.K_RIGHT: # right arrow key pressed
                     game.redo()
         
         game.update()
